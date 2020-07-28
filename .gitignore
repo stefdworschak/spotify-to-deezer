@@ -1,5 +1,4 @@
 secrets.py
-*.txt
 Pipfile
 __pycache__
 *.log
