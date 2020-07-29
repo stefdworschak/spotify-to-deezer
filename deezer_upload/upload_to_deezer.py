@@ -243,6 +243,8 @@ def get_safely(l, idx):
 
 def check_track_is_added(track_id, playlist):
 	tracks = retrieve_deezer_data(playlist.get('tracklist'))
+	if tracks is None:
+		return False
 	return bool(len([track for track in tracks
 				if track.get('id') == track_id]))
 
@@ -264,7 +266,10 @@ def start_import():
 		playlist_exists = bool(len([li['name'] for exli in existing_lists if exli in li['name']]))
 		if playlist_exists:
 			playlist = find_playlist(li['name'], USER_ID)
-			id_ = playlist.get('id')
+			if playlist:
+				id_ = playlist.get('id')
+			else:
+				playlist_exists = False
 
 		track_ids = []
 		for trk in li['tracks']:
